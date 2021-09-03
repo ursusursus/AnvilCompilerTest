@@ -22,6 +22,7 @@ class SampleCodeGenerator : CodeGenerator {
         module: ModuleDescriptor,
         projectFiles: Collection<KtFile>
     ): Collection<GeneratedFile> {
+        if (true) error("should fail build")
         return emptyList()
     }
 
