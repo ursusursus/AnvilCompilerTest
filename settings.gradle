@@ -9,5 +9,6 @@ dependencyResolutionManagement {
 rootProject.name = "AnvilCompilerTest"
 
 include ":app"
-include ":custom-annot"
+include ":library1"
+include ":base"
 include ":custom-annot-compiler"

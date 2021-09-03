@@ -5,6 +5,8 @@ import com.squareup.anvil.annotations.ExperimentalAnvilApi
 import com.squareup.anvil.compiler.api.AnvilContext
 import com.squareup.anvil.compiler.api.CodeGenerator
 import com.squareup.anvil.compiler.api.GeneratedFile
+import com.squareup.anvil.compiler.internal.classesAndInnerClass
+import org.jetbrains.kotlin.descriptors.ModuleDescriptor
 import org.jetbrains.kotlin.psi.KtFile
 import java.io.File
 
@@ -17,15 +19,10 @@ import java.io.File
 class SampleCodeGenerator : CodeGenerator {
     override fun generateCode(
         codeGenDir: File,
-        module: org.jetbrains.kotlin.descriptors.ModuleDescriptor,
+        module: ModuleDescriptor,
         projectFiles: Collection<KtFile>
     ): Collection<GeneratedFile> {
-//        val foo = projectFiles
-//            .filter { it.annotations.contains(FqName("foo")) }
-
-        println("HELLO")
-
-        return error("zis")
+        return emptyList()
     }
 
     override fun isApplicable(context: AnvilContext): Boolean = true

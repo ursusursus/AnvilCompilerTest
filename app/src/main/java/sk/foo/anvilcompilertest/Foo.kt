@@ -1,5 +1,5 @@
 package sk.foo.anvilcompilertest
 
-import android.content.Context
+import sk.foo.library1.Library1
 
-class Foo(context: Context)
+class Foo(library1: Library1)

@@ -7,16 +7,13 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import dagger.Provides
-import javax.inject.Scope
+import sk.foo.custom_annot.AppScope
+import sk.foo.library1.Library1
 
 /**
  * Created by Vlastimil Brečka (www.vlastimilbrecka.sk)
  * on 19. 8. 2021.
  */
-@Scope
-@Retention(AnnotationRetention.RUNTIME)
-annotation class AppScope
-
 @AppScope
 @MergeComponent(scope = AppScope::class)
 interface AppComponent {
@@ -32,5 +29,5 @@ object AppModule {
     @Provides
     @JvmStatic
     @AppScope
-    fun foo(context: Context): Foo = Foo(context)
+    fun foo(library: Library1): Foo = Foo(library)
 }

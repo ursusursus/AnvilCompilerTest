@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.squareup.anvil.annotations.ContributesTo
+import sk.foo.custom_annot.AppScope
 
 class MainActivity : AppCompatActivity() {
 

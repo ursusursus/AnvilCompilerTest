@@ -1,0 +1,12 @@
+apply plugin: "kotlin"
+apply plugin: "com.squareup.anvil"
+
+anvil {
+    generateDaggerFactories true
+}
+
+dependencies {
+    implementation "com.google.dagger:dagger:2.37"
+    implementation project(":base")
+    anvil project(":custom-annot-compiler")
+}
