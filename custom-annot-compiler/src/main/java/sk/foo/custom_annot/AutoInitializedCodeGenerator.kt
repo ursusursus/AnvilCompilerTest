@@ -1,7 +1,6 @@
 package sk.foo.custom_annot
 
 import com.google.auto.service.AutoService
-import com.squareup.anvil.annotations.ContributesTo
 import com.squareup.anvil.annotations.ExperimentalAnvilApi
 import com.squareup.anvil.compiler.api.AnvilCompilationException
 import com.squareup.anvil.compiler.api.AnvilContext
@@ -13,7 +12,6 @@ import com.squareup.anvil.compiler.internal.buildFile
 import com.squareup.anvil.compiler.internal.capitalize
 import com.squareup.anvil.compiler.internal.classesAndInnerClass
 import com.squareup.anvil.compiler.internal.decapitalize
-import com.squareup.anvil.compiler.internal.fqName
 import com.squareup.anvil.compiler.internal.functions
 import com.squareup.anvil.compiler.internal.hasAnnotation
 import com.squareup.anvil.compiler.internal.requireFqName
@@ -21,12 +19,11 @@ import com.squareup.anvil.compiler.internal.requireTypeName
 import com.squareup.anvil.compiler.internal.safePackageString
 import com.squareup.anvil.compiler.internal.scope
 import com.squareup.kotlinpoet.AnnotationSpec
+import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
-import dagger.Provides
-import dagger.multibindings.IntoSet
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
 import org.jetbrains.kotlin.descriptors.annotations.AnnotationDescriptor
 import org.jetbrains.kotlin.name.FqName
@@ -37,19 +34,20 @@ import java.io.File
  * Created by Vlastimil Brečka (www.vlastimilbrecka.sk)
  * on 19. 8. 2021.
  */
-private val daggerModuleFqName = dagger.Module::class.fqName
-private val daggerProvidesFqName = Provides::class.fqName
-private val autoInitializedFqName = AutoInitialized::class.fqName
-private val contributesToFqName = ContributesTo::class.fqName
-
 @ExperimentalAnvilApi
 @AutoService(CodeGenerator::class)
 class AutoInitializedCodeGenerator : CodeGenerator {
+
     override fun generateCode(
         codeGenDir: File,
         module: ModuleDescriptor,
         projectFiles: Collection<KtFile>
     ): Collection<GeneratedFile> {
+        val daggerModuleFqName = FqName("dagger.Module")
+        val daggerProvidesFqName = FqName("dagger.Provides")
+        val autoInitializedFqName = FqName("sk.foo.custom_annot.AutoInitialized")
+        val contributesToFqName = FqName("com.squareup.anvil.annotations.ContributesTo")
+
         return projectFiles
             .classesAndInnerClass(module)
             .filter { it.hasAnnotation(daggerModuleFqName, module) }
@@ -105,9 +103,9 @@ class AutoInitializedCodeGenerator : CodeGenerator {
         return FileSpec.buildFile(packageName, moduleName) {
             addType(
                 TypeSpec.objectBuilder(moduleName)
-                    .addAnnotation(dagger.Module::class)
+                    .addAnnotation(ClassName("dagger", "Module"))
                     .addAnnotation(
-                        AnnotationSpec.builder(ContributesTo::class)
+                        AnnotationSpec.builder(ClassName("com.squareup.anvil.annotations", "ContributesTo"))
                             .addMember("%T::class", scopeName)
                             .build()
                     )
@@ -116,15 +114,15 @@ class AutoInitializedCodeGenerator : CodeGenerator {
                         FunSpec
                             .builder("${typeDecapitalized}Scoped")
                             .addAnnotation(
-                                AnnotationSpec.builder(AutoInitializedSet::class)
+                                AnnotationSpec.builder(ClassName("sk.foo.custom_annot", "AutoInitializedSet"))
                                     .addMember("%T::class", scopeName)
                                     .build()
                             )
-                            .addAnnotation(IntoSet::class)
+                            .addAnnotation(ClassName("dagger.multibindings", "IntoSet"))
                             .addAnnotation(JvmStatic::class)
-                            .addAnnotation(Provides::class)
+                            .addAnnotation(ClassName("dagger", "Provides"))
                             .addParameter(typeDecapitalized, typeName)
-                            .returns(Scoped::class)
+                            .returns(ClassName("sk.foo.custom_annot", "Scoped"))
                             .addStatement("return $typeDecapitalized")
                             .build()
                     )
