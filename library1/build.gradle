@@ -7,13 +7,8 @@ anvil {
     generateDaggerFactories true
 }
 
-afterEvaluate {
-    dependencies {
-        anvilMain project(":custom-annot-compiler")
-    }
-}
-
 dependencies {
     implementation "com.google.dagger:dagger:2.37"
     implementation project(":base")
+    anvil project(":custom-annot-compiler")
 }
