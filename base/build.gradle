@@ -1,4 +1,7 @@
-apply plugin: "kotlin"
+plugins {
+    id "kotlin"
+    id "kotlin-kapt"
+}
 
 dependencies {
     implementation "com.google.dagger:dagger:2.37"

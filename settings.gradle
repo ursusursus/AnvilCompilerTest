@@ -10,5 +10,6 @@ rootProject.name = "AnvilCompilerTest"
 
 include ":app"
 include ":library1"
+include ":library2"
 include ":base"
 include ":custom-annot-compiler"

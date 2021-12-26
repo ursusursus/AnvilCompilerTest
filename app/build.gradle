@@ -1,6 +1,8 @@
 apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 apply plugin: "kotlin-kapt"
+apply plugin: "com.google.devtools.ksp"
+apply plugin: "com.squareup.sqldelight"
 apply plugin: "com.squareup.anvil"
 
 android {
@@ -32,8 +34,8 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:2.37"
 
     implementation project(":library1")
+    implementation project(":library2")
     implementation project(":base")
-    // anvil project(":custom-annot-compiler")
 
     implementation "androidx.core:core-ktx:1.6.0"
     implementation "androidx.appcompat:appcompat:1.3.1"

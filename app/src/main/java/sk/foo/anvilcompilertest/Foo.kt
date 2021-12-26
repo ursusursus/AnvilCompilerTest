@@ -1,5 +1,5 @@
 package sk.foo.anvilcompilertest
 
-import sk.foo.library1.Library1
+import sk.foo.library1.LibraryFooBar
 
-class Foo(library1: Library1)
+class Foo(libraryFooBar: LibraryFooBar)

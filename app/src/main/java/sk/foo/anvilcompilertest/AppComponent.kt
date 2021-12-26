@@ -8,7 +8,8 @@ import dagger.Component
 import dagger.Module
 import dagger.Provides
 import sk.foo.custom_annot.AppScope
-import sk.foo.library1.Library1
+import sk.foo.library1.LibraryFooBar
+import sk.foo.library2.BooFarLibrary
 
 /**
  * Created by Vlastimil Brečka (www.vlastimilbrecka.sk)
@@ -29,5 +30,5 @@ object AppModule {
     @Provides
     @JvmStatic
     @AppScope
-    fun foo(library: Library1): Foo = Foo(library)
+    fun foo(library: LibraryFooBar): Foo = Foo(library)
 }
