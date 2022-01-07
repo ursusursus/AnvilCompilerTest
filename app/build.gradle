@@ -35,4 +35,5 @@ dependencies {
     implementation project(":library1")
     implementation project(":library2")
     implementation project(":base")
+    testImplementation 'junit:junit:4.12'
 }
